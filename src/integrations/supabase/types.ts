@@ -14,7 +14,183 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      exam_answers: {
+        Row: {
+          checked_at: string | null
+          exam_id: string
+          id: string
+          is_correct: boolean | null
+          student_sentence: string
+          submitted_at: string
+          teacher_feedback: string | null
+          time_taken_seconds: number | null
+          word_id: string
+          word_text: string
+        }
+        Insert: {
+          checked_at?: string | null
+          exam_id: string
+          id?: string
+          is_correct?: boolean | null
+          student_sentence: string
+          submitted_at?: string
+          teacher_feedback?: string | null
+          time_taken_seconds?: number | null
+          word_id: string
+          word_text: string
+        }
+        Update: {
+          checked_at?: string | null
+          exam_id?: string
+          id?: string
+          is_correct?: boolean | null
+          student_sentence?: string
+          submitted_at?: string
+          teacher_feedback?: string | null
+          time_taken_seconds?: number | null
+          word_id?: string
+          word_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exam_answers_exam_id_fkey"
+            columns: ["exam_id"]
+            isOneToOne: false
+            referencedRelation: "exams"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exam_answers_word_id_fkey"
+            columns: ["word_id"]
+            isOneToOne: false
+            referencedRelation: "words"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      exams: {
+        Row: {
+          completed_at: string | null
+          id: string
+          started_at: string
+          student_name: string
+          total_score: number | null
+          total_words: number | null
+          word_set_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          started_at?: string
+          student_name: string
+          total_score?: number | null
+          total_words?: number | null
+          word_set_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          started_at?: string
+          student_name?: string
+          total_score?: number | null
+          total_words?: number | null
+          word_set_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exams_word_set_id_fkey"
+            columns: ["word_set_id"]
+            isOneToOne: false
+            referencedRelation: "word_sets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      teachers: {
+        Row: {
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      word_sets: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          teacher_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          teacher_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          teacher_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "word_sets_teacher_id_fkey"
+            columns: ["teacher_id"]
+            isOneToOne: false
+            referencedRelation: "teachers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      words: {
+        Row: {
+          id: string
+          order_index: number
+          time_limit_seconds: number
+          word_set_id: string
+          word_text: string
+        }
+        Insert: {
+          id?: string
+          order_index?: number
+          time_limit_seconds?: number
+          word_set_id: string
+          word_text: string
+        }
+        Update: {
+          id?: string
+          order_index?: number
+          time_limit_seconds?: number
+          word_set_id?: string
+          word_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "words_word_set_id_fkey"
+            columns: ["word_set_id"]
+            isOneToOne: false
+            referencedRelation: "word_sets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
